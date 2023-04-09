@@ -26,14 +26,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         for (ObjectError error : ex.getBindingResult().getGlobalErrors()) {
             errors.add(error.getObjectName() + ": " + error.getDefaultMessage());
         }
-        ExceptionResponse apiError = new ExceptionResponse(HttpStatus.BAD_REQUEST, "Invalid inputs", errors);
+        CustomException apiError = new CustomException(HttpStatus.BAD_REQUEST, "Invalid inputs", errors);
         return handleExceptionInternal(ex, apiError, headers, apiError.getStatus(), request);
     }
 
     @Override
     protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         String error = "No handler found for " + ex.getHttpMethod() + " " + ex.getRequestURL();
-        ExceptionResponse apiError = new ExceptionResponse(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), error);
+        CustomException apiError = new CustomException(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), error);
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 

@@ -1,7 +1,7 @@
 package com.simplespringboot.app.controller;
 
 
-import com.simplespringboot.app.exception.ExceptionResponse;
+import com.simplespringboot.app.exception.CustomException;
 import com.simplespringboot.app.entity.Role;
 import com.simplespringboot.app.global.RoleEnum;
 import com.simplespringboot.app.entity.User;
@@ -83,13 +83,13 @@ public class AuthController {
     @PostMapping("/register")
     @Operation(summary = "Register new user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "User registered", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ExceptionResponse.class))}),
-            @ApiResponse(responseCode = "401", description = "Username is already taken", content = {@Content(mediaType = "application/json" , schema = @Schema(implementation = ExceptionResponse.class))}),
-            @ApiResponse(responseCode = "404", description = "Role not found", content = {@Content(mediaType = "application/json" , schema = @Schema(implementation = ExceptionResponse.class))}),
+            @ApiResponse(responseCode = "201", description = "User registered", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomException.class))}),
+            @ApiResponse(responseCode = "401", description = "Username is already taken", content = {@Content(mediaType = "application/json" , schema = @Schema(implementation = CustomException.class))}),
+            @ApiResponse(responseCode = "404", description = "Role not found", content = {@Content(mediaType = "application/json" , schema = @Schema(implementation = CustomException.class))}),
     })
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
         if (userRepository.existsByUsername(registerRequest.getUsername())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponse(HttpStatus.BAD_REQUEST,"Username is already taken"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CustomException(HttpStatus.BAD_REQUEST,"Username is already taken"));
         }
         User user = new User(registerRequest.getUsername(), encoder.encode(registerRequest.getPassword()));
         Set<String> strRoles = registerRequest.getRole();
@@ -113,6 +113,6 @@ public class AuthController {
         }
         user.setRoles(roles);
         userRepository.save(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new ExceptionResponse(HttpStatus.CREATED,"User created"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new CustomException(HttpStatus.CREATED,"User created"));
     }
 }
