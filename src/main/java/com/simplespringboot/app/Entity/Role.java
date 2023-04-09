@@ -1,4 +1,4 @@
-package com.simplespringboot.app.Model;
+package com.simplespringboot.app.Entity;
 
 import com.simplespringboot.app.Global.RoleEnum;
 import jakarta.persistence.*;

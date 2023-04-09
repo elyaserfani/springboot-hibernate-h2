@@ -1,11 +1,10 @@
-package com.simplespringboot.app.Model;
+package com.simplespringboot.app.Entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity

@@ -2,9 +2,9 @@ package com.simplespringboot.app.Controller;
 
 
 import com.simplespringboot.app.Exception.ExceptionResponse;
-import com.simplespringboot.app.Model.Role;
+import com.simplespringboot.app.Entity.Role;
 import com.simplespringboot.app.Global.RoleEnum;
-import com.simplespringboot.app.Model.User;
+import com.simplespringboot.app.Entity.User;
 import com.simplespringboot.app.Payload.Request.LoginRequest;
 import com.simplespringboot.app.Payload.Request.RegisterRequest;
 import com.simplespringboot.app.Payload.Response.JwtResponse;
@@ -12,7 +12,6 @@ import com.simplespringboot.app.Repository.RoleRepository;
 import com.simplespringboot.app.Repository.UserRepository;
 import com.simplespringboot.app.Security.Service.UserDetailsImpl;
 import com.simplespringboot.app.Utility.JwtUtils;
-import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,7 +25,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,7 +32,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashSet;
