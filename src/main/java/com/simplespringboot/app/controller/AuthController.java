@@ -10,7 +10,7 @@ import com.simplespringboot.app.payload.Request.RegisterRequest;
 import com.simplespringboot.app.payload.Response.JwtResponse;
 import com.simplespringboot.app.repository.RoleRepository;
 import com.simplespringboot.app.repository.UserRepository;
-import com.simplespringboot.app.security.Service.UserDetailsImpl;
+import com.simplespringboot.app.security.service.UserDetailsImpl;
 import com.simplespringboot.app.utility.JwtUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

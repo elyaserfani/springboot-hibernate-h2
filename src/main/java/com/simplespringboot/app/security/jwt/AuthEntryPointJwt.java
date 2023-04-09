@@ -1,4 +1,4 @@
-package com.simplespringboot.app.security.Jwt;
+package com.simplespringboot.app.security.jwt;
 
 
 import java.io.IOException;

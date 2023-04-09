@@ -1,9 +1,9 @@
-package com.simplespringboot.app.security.Jwt;
+package com.simplespringboot.app.security.jwt;
 
 
 import java.io.IOException;
 
-import com.simplespringboot.app.security.Service.UserDetailsServiceImpl;
+import com.simplespringboot.app.security.service.UserDetailsServiceImpl;
 import com.simplespringboot.app.utility.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

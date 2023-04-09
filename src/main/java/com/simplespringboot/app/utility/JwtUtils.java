@@ -3,7 +3,7 @@ package com.simplespringboot.app.utility;
 
 import java.util.Date;
 
-import com.simplespringboot.app.security.Service.UserDetailsImpl;
+import com.simplespringboot.app.security.service.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
