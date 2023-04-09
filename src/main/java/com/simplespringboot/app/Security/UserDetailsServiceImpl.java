@@ -1,7 +1,7 @@
-package com.simplespringboot.app.Security.Service;
+package com.simplespringboot.app.Security;
 
 
-import com.simplespringboot.app.Model.User;
+import com.simplespringboot.app.Entity.User;
 import com.simplespringboot.app.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

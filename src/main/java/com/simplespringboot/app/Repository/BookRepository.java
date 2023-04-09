@@ -1,6 +1,6 @@
 package com.simplespringboot.app.Repository;
 
-import com.simplespringboot.app.Model.Book;
+import com.simplespringboot.app.Entity.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,8 +1,7 @@
 package com.simplespringboot.app.Controller;
 
-import com.simplespringboot.app.Model.Book;
-import com.simplespringboot.app.Model.User;
-import com.simplespringboot.app.Payload.Response.JwtResponse;
+import com.simplespringboot.app.Entity.Book;
+import com.simplespringboot.app.Entity.User;
 import com.simplespringboot.app.Repository.BookRepository;
 import com.simplespringboot.app.Repository.UserRepository;
 import com.simplespringboot.app.Utility.JwtUtils;

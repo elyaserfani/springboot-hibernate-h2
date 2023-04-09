@@ -1,4 +1,4 @@
-package com.simplespringboot.app.Model;
+package com.simplespringboot.app.Entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;

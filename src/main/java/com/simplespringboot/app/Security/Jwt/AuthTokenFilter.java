@@ -3,7 +3,7 @@ package com.simplespringboot.app.Security.Jwt;
 
 import java.io.IOException;
 
-import com.simplespringboot.app.Security.Service.UserDetailsServiceImpl;
+import com.simplespringboot.app.Security.UserDetailsServiceImpl;
 import com.simplespringboot.app.Utility.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
