@@ -1,15 +1,16 @@
-package com.simplespringboot.app.repository;
+package com.simplespringboot.app.service.book;
 
 import com.simplespringboot.app.entity.Book;
+import com.simplespringboot.app.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface BookRepository extends JpaRepository<Book, Long> {
+public interface BookService {
+    Book saveBook(Book book);
     List<Book> findByName(String name);
     List<Book> findByDescription(String description);
-    Page<Book> findAll(Pageable pageable);
 
+    Page<Book> findAll(Pageable pageable);
 }

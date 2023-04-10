@@ -1,9 +1,12 @@
 package com.simplespringboot.app.controller;
 
+import com.simplespringboot.app.dto.request.CreateBookRequest;
 import com.simplespringboot.app.entity.Book;
 import com.simplespringboot.app.entity.User;
 import com.simplespringboot.app.repository.BookRepository;
 import com.simplespringboot.app.repository.UserRepository;
+import com.simplespringboot.app.service.book.BookService;
+import com.simplespringboot.app.service.user.UserService;
 import com.simplespringboot.app.utility.JwtUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -30,13 +33,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 public class BookController {
     @Autowired
-    BookRepository categoryRepository;
+    BookService bookService;
 
     @Autowired
     JwtUtils jwtUtils;
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @PostMapping()
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
@@ -46,11 +49,14 @@ public class BookController {
             @ApiResponse(responseCode = "200", description = "Book created", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Book.class)) }),
             @ApiResponse(responseCode = "404", description = "Author not found", content = {@Content(mediaType = "application/json")}),
     })
-    public ResponseEntity<Book> createBook(@RequestHeader("Authorization") String token, @Valid @RequestBody Book category) {
+    public ResponseEntity<Book> createBook(@RequestHeader("Authorization") String token, @Valid @RequestBody CreateBookRequest createBookRequest) {
         String username = jwtUtils.getUserNameFromJwtToken(token.substring(7));
-        User author = userRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Author not found"));
-        category.setAuthor(author);
-        return ResponseEntity.ok(categoryRepository.save(category));
+        User author = userService.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Author not found"));
+        Book book = new Book();
+        book.setAuthor(author);
+        book.setName(createBookRequest.getName());
+        book.setDescription(createBookRequest.getDescription());
+        return ResponseEntity.ok(bookService.saveBook(book));
     }
 
     @GetMapping()
@@ -62,6 +68,6 @@ public class BookController {
     })
     public Page<Book> getAllBooks(@RequestParam(value = "pageNumber" , defaultValue = "0") int pageNumber, @RequestParam(value = "pageSize" , defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        return categoryRepository.findAll(pageable);
+        return bookService.findAll(pageable);
     }
 }

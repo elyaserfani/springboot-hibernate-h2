@@ -26,7 +26,6 @@ public class Book {
     @Size(min = 10, max = 1000)
     private String description;
 
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User author;

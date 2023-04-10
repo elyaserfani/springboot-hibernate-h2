@@ -1,22 +1,20 @@
 package com.simplespringboot.app.controller;
 
 
-import com.simplespringboot.app.exception.CustomException;
 import com.simplespringboot.app.entity.Role;
+import com.simplespringboot.app.exception.ErrorResponse;
 import com.simplespringboot.app.global.RoleEnum;
 import com.simplespringboot.app.entity.User;
 import com.simplespringboot.app.dto.request.LoginRequest;
 import com.simplespringboot.app.dto.request.RegisterRequest;
 import com.simplespringboot.app.dto.response.JwtResponse;
 import com.simplespringboot.app.repository.RoleRepository;
-import com.simplespringboot.app.repository.UserRepository;
 import com.simplespringboot.app.service.user.UserService;
 import com.simplespringboot.app.service.user.detail.UserDetailsImpl;
 import com.simplespringboot.app.utility.JwtUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -60,8 +58,8 @@ public class UserController {
     @PostMapping("/login")
     @Operation(summary = "Login and authenticate user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "User logged in", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = JwtResponse.class)) }),
-            @ApiResponse(responseCode = "401", description = "Wrong credentials", content = {@Content(mediaType = "application/json")}),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "User logged in", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = JwtResponse.class)) }),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Wrong credentials", content = {@Content(mediaType = "application/json")}),
     })
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -80,13 +78,13 @@ public class UserController {
     @PostMapping("/register")
     @Operation(summary = "Register new user")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "User registered", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomException.class))}),
-            @ApiResponse(responseCode = "401", description = "Username is already taken", content = {@Content(mediaType = "application/json" , schema = @Schema(implementation = CustomException.class))}),
-            @ApiResponse(responseCode = "404", description = "Role not found", content = {@Content(mediaType = "application/json" , schema = @Schema(implementation = CustomException.class))}),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "User registered", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))}),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Username is already taken", content = {@Content(mediaType = "application/json" , schema = @Schema(implementation = ErrorResponse.class))}),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Role not found", content = {@Content(mediaType = "application/json" , schema = @Schema(implementation = ErrorResponse.class))}),
     })
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+    public Object registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
         if (userService.existsByUsername(registerRequest.getUsername())) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CustomException(HttpStatus.BAD_REQUEST,"Username is already taken"));
+            return new ErrorResponse(HttpStatus.BAD_REQUEST,"Username already taken");
         }
         User user = new User(registerRequest.getUsername(), passwordEncoder.encode(registerRequest.getPassword()));
         Set<String> strRoles = registerRequest.getRole();
@@ -110,6 +108,6 @@ public class UserController {
         }
         user.setRoles(roles);
         userService.saveUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new CustomException(HttpStatus.CREATED,"User created"));
+        return new ErrorResponse(HttpStatus.CREATED,"User Created");
     }
 }
