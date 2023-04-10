@@ -1,4 +1,4 @@
-package com.simplespringboot.app.security.service;
+package com.simplespringboot.app.service.user.detail;
 
 
 import com.simplespringboot.app.entity.User;

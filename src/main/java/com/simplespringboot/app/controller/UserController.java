@@ -10,7 +10,8 @@ import com.simplespringboot.app.dto.request.RegisterRequest;
 import com.simplespringboot.app.dto.response.JwtResponse;
 import com.simplespringboot.app.repository.RoleRepository;
 import com.simplespringboot.app.repository.UserRepository;
-import com.simplespringboot.app.security.service.UserDetailsImpl;
+import com.simplespringboot.app.service.user.UserService;
+import com.simplespringboot.app.service.user.detail.UserDetailsImpl;
 import com.simplespringboot.app.utility.JwtUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -44,21 +45,17 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/auth")
 @Tag(name = "Auth",description = "Auth Controller")
-public class AuthController {
+public class UserController {
     @Autowired
     AuthenticationManager authenticationManager;
-
-    @Autowired
-    UserRepository userRepository;
-
     @Autowired
     RoleRepository roleRepository;
-
     @Autowired
-    PasswordEncoder encoder;
-
+    PasswordEncoder passwordEncoder;
     @Autowired
     JwtUtils jwtUtils;
+    @Autowired
+    UserService userService;
 
     @PostMapping("/login")
     @Operation(summary = "Login and authenticate user")
@@ -88,10 +85,10 @@ public class AuthController {
             @ApiResponse(responseCode = "404", description = "Role not found", content = {@Content(mediaType = "application/json" , schema = @Schema(implementation = CustomException.class))}),
     })
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
-        if (userRepository.existsByUsername(registerRequest.getUsername())) {
+        if (userService.existsByUsername(registerRequest.getUsername())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new CustomException(HttpStatus.BAD_REQUEST,"Username is already taken"));
         }
-        User user = new User(registerRequest.getUsername(), encoder.encode(registerRequest.getPassword()));
+        User user = new User(registerRequest.getUsername(), passwordEncoder.encode(registerRequest.getPassword()));
         Set<String> strRoles = registerRequest.getRole();
         Set<Role> roles = new HashSet<>();
         if (strRoles == null) {
@@ -112,7 +109,7 @@ public class AuthController {
             });
         }
         user.setRoles(roles);
-        userRepository.save(user);
+        userService.saveUser(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(new CustomException(HttpStatus.CREATED,"User created"));
     }
 }

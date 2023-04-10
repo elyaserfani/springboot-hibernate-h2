@@ -2,7 +2,7 @@ package com.simplespringboot.app.security;
 
 import com.simplespringboot.app.security.jwt.AuthEntryPointJwt;
 import com.simplespringboot.app.security.jwt.AuthTokenFilter;
-import com.simplespringboot.app.security.service.UserDetailsServiceImpl;
+import com.simplespringboot.app.service.user.detail.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
