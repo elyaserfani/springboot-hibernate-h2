@@ -17,6 +17,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @OpenAPIDefinition(info =@Info(title = "Simple Springboot API", version = "1.0.0", contact = @Contact(name = "Elyas Erfani", email = "elyaserfani2@gmail.com"),  description = "Simple Springboot APIs"))
 @SecurityScheme(name = "Bearer Authentication", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer")
 public class SimpleSpringBootHibernateApplication {
+
     public static void main(String[] args) {
         SpringApplication.run(SimpleSpringBootHibernateApplication.class, args);
     }

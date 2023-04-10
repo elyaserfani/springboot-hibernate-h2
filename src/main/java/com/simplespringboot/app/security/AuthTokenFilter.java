@@ -1,14 +1,10 @@
-package com.simplespringboot.app.security.jwt;
+package com.simplespringboot.app.security;
 
 
 import java.io.IOException;
 
 import com.simplespringboot.app.service.user.detail.UserDetailsServiceImpl;
 import com.simplespringboot.app.utility.JwtUtils;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +14,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 public class AuthTokenFilter extends OncePerRequestFilter {

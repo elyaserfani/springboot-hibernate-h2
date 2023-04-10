@@ -1,11 +1,13 @@
 package com.simplespringboot.app.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "books")
@@ -25,6 +27,7 @@ public class Book {
     @Column(nullable = false)
     @Size(min = 10, max = 1000)
     private String description;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

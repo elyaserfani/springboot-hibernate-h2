@@ -15,7 +15,7 @@ public class ErrorResponse {
 
     private HttpStatus status;
     private String message;
-    private List<String> subErrors;
+    private List<String> details;
 
     public ErrorResponse() {}
 
@@ -30,10 +30,10 @@ public class ErrorResponse {
         this.message = message;
     }
 
-    public ErrorResponse(HttpStatus status, String message , List<String> subErrors){
+    public ErrorResponse(HttpStatus status, String message , List<String> details){
         this.status = status;
         this.message = message;
-        this.subErrors = subErrors;
+        this.details = details;
     }
 
 }

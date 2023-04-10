@@ -16,7 +16,7 @@ H2 And JDBC Credentials :
 
 ```
 Driver : org.h2.Driver
-JDBC URL : jdbc:h2:file:~/myh2db
+JDBC URL : jdbc:h2:file:~/elyasdb
 Username : admin
 Password : admin
 ```
