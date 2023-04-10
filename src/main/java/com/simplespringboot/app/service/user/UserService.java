@@ -1,8 +1,8 @@
 package com.simplespringboot.app.service.user;
 
-import com.simplespringboot.app.dto.request.LoginRequest;
-import com.simplespringboot.app.dto.request.RegisterRequest;
-import com.simplespringboot.app.dto.response.JwtResponse;
+import com.simplespringboot.app.dto.request.LoginRequestDto;
+import com.simplespringboot.app.dto.request.RegisterRequestDto;
+import com.simplespringboot.app.dto.response.JwtResponseDto;
 import com.simplespringboot.app.entity.Role;
 import com.simplespringboot.app.entity.User;
 import com.simplespringboot.app.exception.ErrorResponse;
@@ -16,7 +16,6 @@ import com.simplespringboot.app.utility.Utility;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -51,12 +50,12 @@ public class UserService {
     @Autowired
     private JwtUtils jwtUtils;
 
-    public ResponseEntity<?> registerUser(RegisterRequest registerRequest) throws NotFoundException{
-        if (userRepository.existsByUsername(registerRequest.getUsername())) {
+    public ResponseEntity<?> registerUser(RegisterRequestDto registerRequestDto) throws NotFoundException{
+        if (userRepository.existsByUsername(registerRequestDto.getUsername())) {
             return Utility.buildResponseEntity(new ErrorResponse(HttpStatus.BAD_REQUEST,"Username already taken"));
         }
-        User user = new User(registerRequest.getUsername(), passwordEncoder.encode(registerRequest.getPassword()));
-        Set<String> strRoles = registerRequest.getRole();
+        User user = new User(registerRequestDto.getUsername(), passwordEncoder.encode(registerRequestDto.getPassword()));
+        Set<String> strRoles = registerRequestDto.getRole();
         Set<Role> roles = new HashSet<>();
             strRoles.forEach(role -> {
                 switch (role) {
@@ -73,15 +72,15 @@ public class UserService {
         userRepository.save(user);
         return Utility.buildResponseEntity(new ErrorResponse(HttpStatus.CREATED,"User created"));
     }
-    public ResponseEntity<?> loginUser(LoginRequest loginRequest){
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+    public ResponseEntity<?> loginUser(LoginRequestDto loginRequestDto){
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getUsername(), loginRequestDto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(new JwtResponse(jwt,
+        return ResponseEntity.ok(new JwtResponseDto(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
                 roles));

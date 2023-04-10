@@ -8,11 +8,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Getter
 @Setter
-public class CreateBookRequest implements Serializable {
+public class CreateBookRequestDto implements Serializable {
     @NotBlank
     @Schema(description = "Enter your book name", type = "string", example = "Book Name")
     private String name;
@@ -20,6 +21,10 @@ public class CreateBookRequest implements Serializable {
     @NotBlank
     @Schema(description = "Enter your book description", type = "string", example = "Book Description")
     private String description;
+
+    @NotNull
+    @Schema(description = "Enter shaparak code", type = "integer", example = "15151515")
+    private Integer shaparak_code;
 
     @JsonIgnore
     private User author;

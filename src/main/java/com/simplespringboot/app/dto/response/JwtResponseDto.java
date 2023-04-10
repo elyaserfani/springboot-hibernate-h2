@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class JwtResponse implements Serializable {
+public class JwtResponseDto implements Serializable {
 
     @Schema(description = "User id", type = "integer", example = "1")
     private Long id;
@@ -27,7 +27,7 @@ public class JwtResponse implements Serializable {
     @Schema(description = "User access token", type = "string", example = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VybmFtZSIsImlhdCI6MTY4MTExMDI0OCwiZXhwIjoxNjgxMTk2NjQ4fQ.MpsVkoYnAR7pNU6-Ecf5ORcW3aJyqf8LqlIGvTVnxU_QI4AzGFkgjiTF93cImIG7voKSwiXdTiGnoWoefGKzCQ")
     private String token;
 
-    public JwtResponse(String accessToken, Long id, String username, List<String> roles) {
+    public JwtResponseDto(String accessToken, Long id, String username, List<String> roles) {
         this.token = accessToken;
         this.id = id;
         this.username = username;

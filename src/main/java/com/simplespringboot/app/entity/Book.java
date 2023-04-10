@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -28,6 +29,9 @@ public class Book {
     @Size(min = 10, max = 1000)
     private String description;
 
+    @Column(nullable = false)
+    @Min(1)
+    private Integer shaparakCode;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

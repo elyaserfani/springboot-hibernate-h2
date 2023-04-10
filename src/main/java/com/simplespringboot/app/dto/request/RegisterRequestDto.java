@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class RegisterRequest implements Serializable {
+public class RegisterRequestDto implements Serializable {
     @NotBlank
     @Size(min = 3, max = 20)
     @Schema(description = "Enter your username", type = "string", example = "username")
