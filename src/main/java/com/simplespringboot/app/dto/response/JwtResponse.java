@@ -1,4 +1,4 @@
-package com.simplespringboot.app.payload.Response;
+package com.simplespringboot.app.dto.response;
 
 
 import java.util.List;
