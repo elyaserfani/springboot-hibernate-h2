@@ -10,7 +10,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@Builder
 public class ErrorResponse {
 
     private HttpStatus status;
@@ -19,11 +18,10 @@ public class ErrorResponse {
 
     public ErrorResponse() {}
 
-    public ErrorResponse(HttpStatus status) {
-        this();
-        this.status = status;
+    public ErrorResponse(String message){
+        super();
+        this.message = message;
     }
-
     public ErrorResponse(HttpStatus status, String message) {
         this();
         this.status = status;

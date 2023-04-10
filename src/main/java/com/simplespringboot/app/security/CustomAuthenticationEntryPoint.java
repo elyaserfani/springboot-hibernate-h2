@@ -15,6 +15,7 @@ import java.io.IOException;
 @Component
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
+    //Handle Authentication Exception (Error Code = 401)
     ObjectWriter objectWriter;
 
     public CustomAuthenticationEntryPoint() {

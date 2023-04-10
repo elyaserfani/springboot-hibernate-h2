@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Set;
@@ -18,8 +19,9 @@ public class RegisterRequest implements Serializable {
     @Schema(description = "Enter your username", type = "string", example = "username")
     private String username;
 
+    @NotEmpty
     @Schema(description = "Enter your roles", type = "array")
-    private Set<String> role;
+    private Set<@NotBlank String> role;
 
     @NotBlank
     @Size(min = 6, max = 40)

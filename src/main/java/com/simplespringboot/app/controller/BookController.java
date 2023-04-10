@@ -50,14 +50,8 @@ public class BookController {
             @ApiResponse(responseCode = "200", description = "Book created", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Book.class)) }),
             @ApiResponse(responseCode = "404", description = "Author not found", content = {@Content(mediaType = "application/json")}),
     })
-    public ResponseEntity<Book> createBook(@RequestHeader("Authorization") String token, @Valid @RequestBody CreateBookRequest createBookRequest) {
-        String username = jwtUtils.getUserNameFromJwtToken(token.substring(7));
-        User author = userService.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Author not found"));
-        Book book = new Book();
-        book.setAuthor(author);
-        book.setName(createBookRequest.getName());
-        book.setDescription(createBookRequest.getDescription());
-        return ResponseEntity.ok(bookService.saveBook(book));
+    public ResponseEntity<?> createBook(@RequestHeader("Authorization") String token, @Valid @RequestBody CreateBookRequest createBookRequest) {
+       return bookService.createBook(token,createBookRequest);
     }
 
     @GetMapping()
@@ -68,7 +62,6 @@ public class BookController {
             @ApiResponse(responseCode = "200", description = "Book lists", content = {@Content(mediaType = "application/json")}),
     })
     public Page<Book> getAllBooks(@RequestParam(value = "pageNumber" , defaultValue = "0") int pageNumber, @RequestParam(value = "pageSize" , defaultValue = "10") int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        return bookService.findAll(pageable);
+        return bookService.getAllBooks(pageNumber,pageSize);
     }
 }

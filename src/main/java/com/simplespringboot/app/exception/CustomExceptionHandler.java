@@ -1,6 +1,7 @@
 package com.simplespringboot.app.exception;
 
 import com.simplespringboot.app.exception.ErrorResponse;
+import com.simplespringboot.app.utility.Utility;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +26,14 @@ import java.util.List;
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
+    //Handle Authentication Exception (Error Code = 401)
     @ExceptionHandler(value = {AuthenticationException.class})
-    public ErrorResponse handleAuthenticationException(AuthenticationException ex) {
+    public ResponseEntity<?> handleAuthenticationException(AuthenticationException ex) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.UNAUTHORIZED,"The user is not authenticated");
-        return errorResponse;
+        return Utility.buildResponseEntity(errorResponse);
     }
 
+    //Handle Bad Requests Exception (Error Code = 400 , Validation Errors)
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<String> errors = new ArrayList<String>();
@@ -40,9 +45,5 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         }
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "Invalid inputs", errors);
         return handleExceptionInternal(ex, errorResponse, headers, errorResponse.getStatus(), request);
-    }
-
-    private ResponseEntity<Object> buildResponseEntity(ErrorResponse errorResponse) {
-        return new ResponseEntity<>(errorResponse, errorResponse.getStatus());
     }
 }
