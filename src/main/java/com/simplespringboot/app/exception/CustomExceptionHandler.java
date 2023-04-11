@@ -1,5 +1,8 @@
 package com.simplespringboot.app.exception;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.simplespringboot.app.exception.ErrorResponse;
 import com.simplespringboot.app.utility.Utility;
 import org.springframework.core.Ordered;
@@ -13,12 +16,14 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,5 +50,19 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         }
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST, "Invalid inputs", errors);
         return handleExceptionInternal(ex, errorResponse, headers, errorResponse.getStatus(), request);
+    }
+
+    //Handle Not Found Requests Exception (Error Code = 404)
+    @Override
+    public ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        ObjectWriter objectWriter = new ObjectMapper().writer().withDefaultPrettyPrinter();
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND,"Resource not found");
+        try {
+            String json = objectWriter.writeValueAsString(errorResponse);
+            headers.add("Content-Type", "application/json;charset=utf-8");
+            return handleExceptionInternal(ex, json, headers, HttpStatus.NOT_FOUND, request);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
