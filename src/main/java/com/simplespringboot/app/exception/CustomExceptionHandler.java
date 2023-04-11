@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.simplespringboot.app.exception.ErrorResponse;
+import com.simplespringboot.app.exception.type.InternalServerErrorException;
 import com.simplespringboot.app.utility.Utility;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,6 +37,13 @@ import java.util.List;
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     private static final Logger logger = LogManager.getLogger(CustomExceptionHandler.class);
+
+    //Handle All Exceptions
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        logger.warn(ex.getMessage());
+        return super.handleExceptionInternal(ex, body, headers, status, request);
+    }
 
     //Handle Authentication Exception (Error Code = 401)
     @ExceptionHandler(value = {AuthenticationException.class})
@@ -72,11 +80,4 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         }
     }
 
-
-    //Handle All Exceptions
-    @Override
-    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        logger.error(ex.getMessage());
-        return super.handleExceptionInternal(ex, body, headers, status, request);
-    }
 }

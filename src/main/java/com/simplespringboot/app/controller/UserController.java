@@ -2,6 +2,7 @@ package com.simplespringboot.app.controller;
 
 
 import com.simplespringboot.app.exception.ErrorResponse;
+import com.simplespringboot.app.exception.type.InternalServerErrorException;
 import com.simplespringboot.app.exception.type.NotFoundException;
 import com.simplespringboot.app.dto.request.LoginRequestDto;
 import com.simplespringboot.app.dto.request.RegisterRequestDto;
@@ -14,11 +15,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -53,5 +50,15 @@ public class UserController {
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequestDto registerRequestDto) throws NotFoundException {
         return userService.registerUser(registerRequestDto);
     }
+
+    @GetMapping("/internalerror")
+    @Operation(summary = "Throw internal server error")
+    @ApiResponses(value = {
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))}),
+    })
+    public ResponseEntity<?> throwInternalError(){
+        return userService.throwInternalError();
+    }
+
 
 }

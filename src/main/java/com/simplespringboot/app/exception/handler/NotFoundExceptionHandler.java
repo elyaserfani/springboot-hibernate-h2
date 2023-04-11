@@ -17,7 +17,7 @@ public class NotFoundExceptionHandler {
     //Handle Not Founds Exception (Error Code = 404)
     @ExceptionHandler(value = NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public @ResponseBody ResponseEntity<?> handleUserNotFoundException(NotFoundException notFoundException){
+    public @ResponseBody ResponseEntity<?> handleNotFoundException(NotFoundException notFoundException){
         return Utility.buildResponseEntity(new ErrorResponse(HttpStatus.NOT_FOUND,notFoundException.getMessage()));
     }
 }

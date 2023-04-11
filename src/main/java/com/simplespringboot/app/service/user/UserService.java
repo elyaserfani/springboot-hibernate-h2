@@ -6,6 +6,7 @@ import com.simplespringboot.app.dto.response.JwtResponseDto;
 import com.simplespringboot.app.entity.Role;
 import com.simplespringboot.app.entity.User;
 import com.simplespringboot.app.exception.ErrorResponse;
+import com.simplespringboot.app.exception.type.InternalServerErrorException;
 import com.simplespringboot.app.exception.type.NotFoundException;
 import com.simplespringboot.app.global.RoleEnum;
 import com.simplespringboot.app.repository.RoleRepository;
@@ -84,6 +85,10 @@ public class UserService {
                 userDetails.getId(),
                 userDetails.getUsername(),
                 roles));
+    }
+
+    public ResponseEntity<?> throwInternalError(){
+        throw new InternalServerErrorException("Internal server error");
     }
     public Optional<User> findByUsername(String username){
         return userRepository.findByUsername(username);

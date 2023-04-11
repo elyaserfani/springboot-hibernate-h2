@@ -21,14 +21,12 @@
         </RollingFile>
     </Appenders>
     <Loggers>
-        <Logger name="com.simplespringboot.app" level="debug" additivity="false">
-            <AppenderRef ref="ConsoleAppender" />
-        </Logger>
-        <Logger name="com.simplespringboot.app" level="error">
-            <AppenderRef ref="FileAppender" />
-        </Logger>
-        <Root level="info">
-            <AppenderRef ref="ConsoleAppender"/>
+        <Root level="all">
+            <AppenderRef ref="ConsoleAppender" level="info"/>
+            <AppenderRef ref="ConsoleAppender" level="warn"/>
+            <AppenderRef ref="ConsoleAppender" level="debug"/>
+            <AppenderRef ref="ConsoleAppender" level="error"/>
+            <AppenderRef ref="FileAppender" level="error"/>
         </Root>
     </Loggers>
 </Configuration>
