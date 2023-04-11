@@ -2,8 +2,7 @@ package com.simplespringboot.app.controller;
 
 import com.simplespringboot.app.dto.request.CreateBookRequestDto;
 import com.simplespringboot.app.dto.response.BookResponseDto;
-import com.simplespringboot.app.dto.response.CreateBookResponseDto;
-import com.simplespringboot.app.entity.Book;
+import com.simplespringboot.app.global.CustomPageDto;
 import com.simplespringboot.app.service.book.BookService;
 import com.simplespringboot.app.service.user.UserService;
 import com.simplespringboot.app.utility.JwtUtils;
@@ -15,13 +14,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -43,7 +40,7 @@ public class BookController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Create book")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Book created", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CreateBookResponseDto.class)) }),
+            @ApiResponse(responseCode = "200", description = "Book created", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = BookResponseDto.class)) }),
             @ApiResponse(responseCode = "404", description = "Author not found", content = {@Content(mediaType = "application/json")}),
     })
     public ResponseEntity<?> createBook(@RequestHeader("Authorization") String token, @Valid @RequestBody CreateBookRequestDto createBookRequestDto) {
@@ -55,9 +52,9 @@ public class BookController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Operation(summary = "Get all books with pagination")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Book lists", content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(responseCode = "200", description = "Book lists", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomPageDto.class))}),
     })
-    public List<BookResponseDto> getAllBooks(@RequestParam(value = "pageNumber" , defaultValue = "0") int pageNumber, @RequestParam(value = "pageSize" , defaultValue = "10") int pageSize) {
+    public CustomPageDto<BookResponseDto> getAllBooks(@RequestParam(value = "pageNumber" , defaultValue = "0") int pageNumber, @RequestParam(value = "pageSize" , defaultValue = "10") int pageSize) {
         return bookService.getAllBooks(pageNumber,pageSize);
     }
 }
