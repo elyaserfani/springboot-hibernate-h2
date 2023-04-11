@@ -17,8 +17,8 @@ import java.util.Set;
         uniqueConstraints = {
         @UniqueConstraint(columnNames = "username")
 })
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {

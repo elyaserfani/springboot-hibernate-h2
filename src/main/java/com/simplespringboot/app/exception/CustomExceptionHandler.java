@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.simplespringboot.app.exception.ErrorResponse;
 import com.simplespringboot.app.utility.Utility;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -22,14 +24,18 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
+
+    private static final Logger logger = LogManager.getLogger(CustomExceptionHandler.class);
 
     //Handle Authentication Exception (Error Code = 401)
     @ExceptionHandler(value = {AuthenticationException.class})
@@ -64,5 +70,13 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    //Handle All Exceptions
+    @Override
+    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
+        logger.error(ex.getMessage());
+        return super.handleExceptionInternal(ex, body, headers, status, request);
     }
 }
