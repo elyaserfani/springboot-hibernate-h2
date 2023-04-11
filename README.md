@@ -7,6 +7,9 @@
 - Spring Security
 - Spring Data
 - Swagger
+- Log4j2
+- MapStruct
+- Elastic Search
 ---
 ### Installation and Information :
 
@@ -26,6 +29,12 @@ You can also change this credentials inside `src/main/resources/application.prop
 ### Swagger documentation : 
 
 You can visit and use swagger documentation at : `https://localhost:8081/swagger`
+
+
+### Kibana dashboard (for elastic) : 
+`http://localhost:5601`
+
+Choose "Discover" and create index pattern with `error*` name .
 
 ---
 
