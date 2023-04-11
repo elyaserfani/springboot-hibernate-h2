@@ -1,6 +1,8 @@
 package com.simplespringboot.app.controller;
 
 
+import com.fanapium.keylead.client.exception.ClientOperationException;
+import com.fanapium.keylead.common.oauth.exception.OAuthException;
 import com.simplespringboot.app.exception.ErrorResponse;
 import com.simplespringboot.app.exception.type.InternalServerErrorException;
 import com.simplespringboot.app.exception.type.NotFoundException;
@@ -59,6 +61,5 @@ public class UserController {
     public ResponseEntity<?> throwInternalError(){
         return userService.throwInternalError();
     }
-
 
 }

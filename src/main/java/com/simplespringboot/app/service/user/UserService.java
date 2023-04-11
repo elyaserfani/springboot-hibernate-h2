@@ -1,5 +1,12 @@
 package com.simplespringboot.app.service.user;
 
+import com.fanapium.keylead.client.KeyleadClient;
+import com.fanapium.keylead.client.KeyleadClientFactory;
+import com.fanapium.keylead.client.exception.ClientOperationException;
+import com.fanapium.keylead.client.vo.ClientCredentials;
+import com.fanapium.keylead.common.KeyleadUserVo;
+import com.fanapium.keylead.common.oauth.exception.OAuthException;
+import com.fanapium.keylead.common.oauth.vo.OAuthRequest;
 import com.simplespringboot.app.dto.request.LoginRequestDto;
 import com.simplespringboot.app.dto.request.RegisterRequestDto;
 import com.simplespringboot.app.dto.response.JwtResponseDto;
@@ -17,6 +24,8 @@ import com.simplespringboot.app.utility.Utility;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -50,6 +59,15 @@ public class UserService {
 
     @Autowired
     private JwtUtils jwtUtils;
+
+    @Value("${pod.client.id}")
+    private String podClientId;
+
+    @Value("${pod.client.secret}")
+    private String podClientSecret;
+
+    @Value("${pod.sso.server}")
+    private String podSsoServer;
 
     public ResponseEntity<?> registerUser(RegisterRequestDto registerRequestDto) throws NotFoundException{
         if (userRepository.existsByUsername(registerRequestDto.getUsername())) {
