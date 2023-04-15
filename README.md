@@ -13,7 +13,13 @@
 ---
 ### Installation and Information :
 
-You can run project and enter : `https://localhost:8081/console` for visit H2 Dashboard console . 
+This project has been dockerized and you should :
+
+```
+docker-compose up -d
+```
+
+Then You can run project and enter : `https://localhost:8081/console` for visit H2 Dashboard console . 
 
 H2 And JDBC Credentials :
 
