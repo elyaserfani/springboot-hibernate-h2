@@ -58,12 +58,6 @@ public class PodService {
     @Value("${pod.api.token}")
     private String podApiToken;
 
-    @Value("${pod.code.verifier}")
-    private String podCodeVerifier;
-
-    @Value("${pod.code.challenge}")
-    private String podCodeChallenge;
-
     public ResponseEntity<?> loginInitialize() throws OAuthException, ClientOperationException {
         KeyleadClient keyleadClient = KeyleadClientFactory.createClient(podSsoServer);
         OAuthRequest oAuthRequest = new OAuthRequest();
