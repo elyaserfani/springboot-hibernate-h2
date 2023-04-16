@@ -60,15 +60,6 @@ public class UserService {
     @Autowired
     private JwtUtils jwtUtils;
 
-    @Value("${pod.client.id}")
-    private String podClientId;
-
-    @Value("${pod.client.secret}")
-    private String podClientSecret;
-
-    @Value("${pod.sso.server}")
-    private String podSsoServer;
-
     public ResponseEntity<?> registerUser(RegisterRequestDto registerRequestDto) throws NotFoundException{
         if (userRepository.existsByUsername(registerRequestDto.getUsername())) {
             return Utility.buildResponseEntity(new ErrorResponse(HttpStatus.BAD_REQUEST,"Username already taken"));
