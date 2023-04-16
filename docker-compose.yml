@@ -2,6 +2,7 @@ version: '3'
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.2
+    restart: unless-stopped
     environment:
       - discovery.type=single-node
       - xpack.security.enabled=false
@@ -10,11 +11,13 @@ services:
       - "9300:9300"
   kibana:
     image: docker.elastic.co/kibana/kibana:7.16.2
+    restart: unless-stopped
     ports:
       - "5601:5601"
     depends_on:
       - elasticsearch
   app:
+    restart: unless-stopped
     build:
       context: .
       dockerfile: Dockerfile
