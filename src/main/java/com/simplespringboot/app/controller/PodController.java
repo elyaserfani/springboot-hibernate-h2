@@ -28,6 +28,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -58,7 +60,7 @@ public class PodController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Access token generated", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) }),
     })
-    public String login(@RequestParam("code") String code) throws OAuthException, ClientOperationException, UserOperationException, EncoderException, NoSuchAlgorithmException {
+    public String login(@RequestParam("code") String code) throws OAuthException, ClientOperationException, UserOperationException, EncoderException, NoSuchAlgorithmException, URISyntaxException, MalformedURLException, UnsupportedEncodingException {
         return podService.login(code);
     }
 

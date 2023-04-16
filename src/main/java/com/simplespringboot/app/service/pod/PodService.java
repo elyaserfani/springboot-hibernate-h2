@@ -24,13 +24,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.yaml.snakeyaml.util.UriEncoder;
 
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Map;
 
 @Service
 public class PodService {
@@ -68,19 +74,19 @@ public class PodService {
         String authUri = keyleadClient.getAuthorizationUrl(oAuthRequest);
         return Utility.buildResponseEntity(new ErrorResponse(HttpStatus.CREATED,authUri));
     }
-    public String login(String code) throws OAuthException, ClientOperationException, UserOperationException, EncoderException, NoSuchAlgorithmException {
+    public String login(String code) throws OAuthException, ClientOperationException, UserOperationException, EncoderException, NoSuchAlgorithmException, URISyntaxException, MalformedURLException, UnsupportedEncodingException {
         String credentials = podClientId + ":" + podClientSecret;
-        String encodedCredentials = Base64.getEncoder().encodeToString(credentials.getBytes(StandardCharsets.UTF_8));
+        String encodedCredentials = "Basic " +Base64.getEncoder().encodeToString(credentials.getBytes(StandardCharsets.UTF_8));
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Basic " + encodedCredentials);
+        headers.set("Authorization", encodedCredentials);
+        headers.set("Accept","application/json");
+        headers.set("Content-Type","application/x-www-form-urlencoded");
+        headers.set("Accept-Language","en");
+        HttpEntity<Map<String, Object>> entity = new HttpEntity<>(null, headers);
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.postForEntity("http://accounts.pod.ir/oauth2/token?grant_type=authorization_code&code="+code+"&client_id="+podClientId+"&redirect_uri="+podRedirectUri,null, String.class);
+        ResponseEntity<String> response = restTemplate.exchange("https://accounts.pod.ir/oauth2/token?grant_type=authorization_code&code="+code+"&client_id="+podClientId+"&redirect_uri="+podRedirectUri+"&linkDeliveryType=SMS", HttpMethod.POST, entity, String.class);
         return response.getBody();
-    }
-
-    public static String toBase64(final String clearText) throws NoSuchAlgorithmException {
-        return new String(Base64.getEncoder().encode(clearText.getBytes(StandardCharsets.UTF_8)));
     }
 
 }
