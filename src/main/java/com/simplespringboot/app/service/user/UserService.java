@@ -1,12 +1,6 @@
 package com.simplespringboot.app.service.user;
 
-import com.fanapium.keylead.client.KeyleadClient;
-import com.fanapium.keylead.client.KeyleadClientFactory;
-import com.fanapium.keylead.client.exception.ClientOperationException;
-import com.fanapium.keylead.client.vo.ClientCredentials;
-import com.fanapium.keylead.common.KeyleadUserVo;
-import com.fanapium.keylead.common.oauth.exception.OAuthException;
-import com.fanapium.keylead.common.oauth.vo.OAuthRequest;
+
 import com.simplespringboot.app.dto.request.LoginRequestDto;
 import com.simplespringboot.app.dto.request.RegisterRequestDto;
 import com.simplespringboot.app.dto.response.JwtResponseDto;

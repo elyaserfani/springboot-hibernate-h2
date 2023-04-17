@@ -1,18 +1,13 @@
 package com.simplespringboot.app.exception.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.simplespringboot.app.elastic.ElasticSearchClient;
 import com.simplespringboot.app.exception.CustomExceptionHandler;
 import com.simplespringboot.app.exception.ErrorResponse;
 import com.simplespringboot.app.exception.type.InternalServerErrorException;
 import com.simplespringboot.app.utility.Utility;
-import org.apache.http.entity.ContentType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.elasticsearch.action.admin.indices.create.CreateIndexRequest;
 import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.client.ElasticsearchClient;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.xcontent.XContentType;
