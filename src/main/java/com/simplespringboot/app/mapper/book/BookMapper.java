@@ -17,7 +17,7 @@ public interface BookMapper {
     BookResponseDto mapEntityToBookResponse(Book book);
     Book mapBookResponseToEntity(BookResponseDto bookResponseDto);
 
-    @Mapping(source = "",target = "")
+    @Mapping(target = "")
     List<BookResponseDto> mapListOfEntityToListOfBookResponse(List<Book> entities);
     default CustomPageDto<BookResponseDto> mapDefaultPaginationToCustomPagination(Page<Book> page) {
         CustomMeta meta = new CustomMeta(page.getNumber(), page.getSize(), page.getTotalElements());
