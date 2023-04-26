@@ -1,4 +1,4 @@
-package com.simplespringboot.app.service.user;
+package com.simplespringboot.app.service;
 
 
 import com.simplespringboot.app.dto.request.LoginRequestDto;
@@ -12,14 +12,12 @@ import com.simplespringboot.app.exception.type.NotFoundException;
 import com.simplespringboot.app.global.RoleEnum;
 import com.simplespringboot.app.repository.RoleRepository;
 import com.simplespringboot.app.repository.UserRepository;
-import com.simplespringboot.app.service.user.detail.UserDetailsImpl;
 import com.simplespringboot.app.utility.JwtUtils;
 import com.simplespringboot.app.utility.Utility;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

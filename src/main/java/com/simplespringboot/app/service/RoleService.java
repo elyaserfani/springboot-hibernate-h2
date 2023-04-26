@@ -1,4 +1,4 @@
-package com.simplespringboot.app.service.role;
+package com.simplespringboot.app.service;
 
 import com.simplespringboot.app.entity.Role;
 import com.simplespringboot.app.global.RoleEnum;

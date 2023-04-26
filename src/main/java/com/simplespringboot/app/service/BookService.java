@@ -1,11 +1,11 @@
-package com.simplespringboot.app.service.book;
+package com.simplespringboot.app.service;
 
 import com.simplespringboot.app.dto.request.CreateBookRequestDto;
 import com.simplespringboot.app.dto.response.BookResponseDto;
 import com.simplespringboot.app.entity.Book;
 import com.simplespringboot.app.entity.User;
 import com.simplespringboot.app.global.CustomPageDto;
-import com.simplespringboot.app.mapper.book.BookMapper;
+import com.simplespringboot.app.mapper.BookMapper;
 import com.simplespringboot.app.repository.BookRepository;
 import com.simplespringboot.app.repository.UserRepository;
 import com.simplespringboot.app.utility.JwtUtils;

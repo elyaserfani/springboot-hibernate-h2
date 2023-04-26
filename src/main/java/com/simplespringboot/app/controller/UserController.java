@@ -1,15 +1,12 @@
 package com.simplespringboot.app.controller;
 
 
-import com.fanapium.keylead.client.exception.ClientOperationException;
-import com.fanapium.keylead.common.oauth.exception.OAuthException;
 import com.simplespringboot.app.exception.ErrorResponse;
-import com.simplespringboot.app.exception.type.InternalServerErrorException;
 import com.simplespringboot.app.exception.type.NotFoundException;
 import com.simplespringboot.app.dto.request.LoginRequestDto;
 import com.simplespringboot.app.dto.request.RegisterRequestDto;
 import com.simplespringboot.app.dto.response.JwtResponseDto;
-import com.simplespringboot.app.service.user.UserService;
+import com.simplespringboot.app.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -1,4 +1,4 @@
-package com.simplespringboot.app.service.user.detail;
+package com.simplespringboot.app.service;
 
 
 import java.util.Collection;

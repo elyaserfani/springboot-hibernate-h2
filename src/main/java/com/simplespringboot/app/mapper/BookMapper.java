@@ -1,4 +1,4 @@
-package com.simplespringboot.app.mapper.book;
+package com.simplespringboot.app.mapper;
 
 import com.simplespringboot.app.dto.response.BookResponseDto;
 import com.simplespringboot.app.entity.Book;

@@ -3,7 +3,7 @@ package com.simplespringboot.app.security;
 
 import java.io.IOException;
 
-import com.simplespringboot.app.service.user.detail.UserDetailsServiceImpl;
+import com.simplespringboot.app.service.UserDetailsServiceImpl;
 import com.simplespringboot.app.utility.JwtUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

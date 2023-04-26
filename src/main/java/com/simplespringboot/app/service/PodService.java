@@ -1,40 +1,26 @@
-package com.simplespringboot.app.service.pod;
+package com.simplespringboot.app.service;
 
 import com.fanapium.keylead.client.KeyleadClient;
 import com.fanapium.keylead.client.KeyleadClientFactory;
 import com.fanapium.keylead.client.exception.ClientOperationException;
 import com.fanapium.keylead.client.exception.UserOperationException;
-import com.fanapium.keylead.client.users.ModifiableUser;
-import com.fanapium.keylead.client.users.User;
-import com.fanapium.keylead.client.users.Users;
-import com.fanapium.keylead.client.vo.ClientCredentials;
-import com.fanapium.keylead.client.vo.NewUserVo;
-import com.fanapium.keylead.common.KeyleadUserVo;
 import com.fanapium.keylead.common.oauth.exception.OAuthException;
 import com.fanapium.keylead.common.oauth.vo.OAuthRequest;
-import com.simplespringboot.app.dto.request.CreateBookRequestDto;
-import com.simplespringboot.app.exception.CustomExceptionHandler;
 import com.simplespringboot.app.exception.ErrorResponse;
 import com.simplespringboot.app.utility.Utility;
 import org.apache.commons.codec.EncoderException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.yaml.snakeyaml.util.UriEncoder;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.Map;
 
