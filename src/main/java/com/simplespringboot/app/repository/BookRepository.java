@@ -13,5 +13,4 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findByDescription(String description);
 
     Page<Book> findAll(Pageable pageable);
-
 }

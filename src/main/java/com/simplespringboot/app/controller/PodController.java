@@ -25,7 +25,6 @@ import java.security.NoSuchAlgorithmException;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/pod")
-@Tag(name = "pod",description = "Pod Controller")
 
 public class PodController {
 

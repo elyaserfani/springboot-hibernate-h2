@@ -7,11 +7,9 @@ import com.simplespringboot.app.dto.request.LoginRequestDto;
 import com.simplespringboot.app.dto.request.RegisterRequestDto;
 import com.simplespringboot.app.dto.response.JwtResponseDto;
 import com.simplespringboot.app.service.UserService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +20,6 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
-@Tag(name = "Auth",description = "Auth Controller")
 public class UserController {
 
 
@@ -30,30 +27,30 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/login")
-    @Operation(summary = "Login and authenticate user")
+    @ApiOperation(value = "Login user")
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "User logged in", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = JwtResponseDto.class)) }),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Wrong credentials", content = {@Content(mediaType = "application/json")}),
+            @ApiResponse(code = 200, message = "User logged in", response = JwtResponseDto.class),
+            @ApiResponse(code = 401, message = "Wrong credentials", response = ErrorResponse.class)
     })
     public ResponseEntity<?> loginUser(@Valid @RequestBody LoginRequestDto loginRequestDto) {
      return userService.loginUser(loginRequestDto);
     }
 
     @PostMapping("/register")
-    @Operation(summary = "Register new user")
+    @ApiOperation(value = "Register new user")
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "201", description = "User registered", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))}),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Username is already taken", content = {@Content(mediaType = "application/json" , schema = @Schema(implementation = ErrorResponse.class))}),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Role not found", content = {@Content(mediaType = "application/json" , schema = @Schema(implementation = ErrorResponse.class))}),
+            @ApiResponse(code = 200, message = "User registered", response = ErrorResponse.class),
+            @ApiResponse(code = 400, message = "Username is already taken", response = ErrorResponse.class),
+            @ApiResponse(code = 404, message = "Role not found", response = ErrorResponse.class),
     })
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequestDto registerRequestDto) throws NotFoundException {
         return userService.registerUser(registerRequestDto);
     }
 
     @GetMapping("/internalerror")
-    @Operation(summary = "Throw internal server error")
+    @ApiOperation(value = "Throw internal server error")
     @ApiResponses(value = {
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))}),
+            @ApiResponse(code = 500, message = "Internal server error", response = ErrorResponse.class)
     })
     public ResponseEntity<?> throwInternalError(){
         return userService.throwInternalError();
