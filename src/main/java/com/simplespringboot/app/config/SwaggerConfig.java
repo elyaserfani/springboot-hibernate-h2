@@ -1,10 +1,15 @@
 package com.simplespringboot.app.config;
 
 import com.fasterxml.classmate.TypeResolver;
+import com.simplespringboot.app.entity.Book;
+import com.simplespringboot.app.exception.ErrorResponse;
 import com.simplespringboot.app.global.CustomPageDto;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -15,13 +20,14 @@ import springfox.documentation.swagger.web.*;
 
 @Configuration
 @EnableWebMvc
-public class SwaggerConfig {
-
+public class SwaggerConfig{
     @Bean
     public Docket api(TypeResolver typeResolver) {
         return new Docket(DocumentationType.SWAGGER_2)
                 .additionalModels(
-                        typeResolver.resolve(CustomPageDto.class)
+                        typeResolver.resolve(CustomPageDto.class),
+                        typeResolver.resolve(Book.class),
+                        typeResolver.resolve(ErrorResponse.class)
                 )
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.simplespringboot.app"))
@@ -36,6 +42,7 @@ public class SwaggerConfig {
                 .version("1.0")
                 .build();
     }
+
     @Bean
     public UiConfiguration uiConfig() {
         return UiConfigurationBuilder.builder()
@@ -55,5 +62,4 @@ public class SwaggerConfig {
                 .validatorUrl(null)
                 .build();
     }
-
 }

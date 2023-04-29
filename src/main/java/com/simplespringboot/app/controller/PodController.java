@@ -11,11 +11,11 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.codec.EncoderException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -40,7 +40,7 @@ public class PodController {
        return podService.loginInitialize();
     }
     @GetMapping("/getCode")
-    @Hidden
+    @ApiIgnore
     public String getCode(@RequestParam("code") String code) {
         return "<h1>"+code+"</h1>";
     }

@@ -33,8 +33,9 @@ Password : admin
 You can also change this credentials inside `src/main/resources/application.properties` file .
 
 ### Swagger documentation : 
+You can visit and use swagger documentation at : `http://localhost:8081/api-docs`
 
-You can visit and use swagger documentation at : `https://localhost:8081/swagger`
+You can visit and use swagger UI at : `https://localhost:8081/swagger-ui/`
 
 
 ### Kibana dashboard (for elastic) : 
