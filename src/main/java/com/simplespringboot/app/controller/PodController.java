@@ -5,6 +5,7 @@ import com.fanapium.keylead.client.exception.UserOperationException;
 import com.fanapium.keylead.common.oauth.exception.OAuthException;
 import com.simplespringboot.app.exception.ErrorResponse;
 import com.simplespringboot.app.service.PodService;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -32,7 +33,7 @@ public class PodController {
     private PodService podService;
 
     @GetMapping("/init")
-    @Operation(summary = "Login initialize for pod accounts")
+    @ApiOperation(value = "Login initialize for pod accounts")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Login link generated", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) }),
     })
@@ -45,7 +46,7 @@ public class PodController {
         return "<h1>"+code+"</h1>";
     }
     @GetMapping("/login")
-    @Operation(summary = "Login with code and generate access token")
+    @ApiOperation(value = "Login with code and generate access token")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Access token generated", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)) }),
     })

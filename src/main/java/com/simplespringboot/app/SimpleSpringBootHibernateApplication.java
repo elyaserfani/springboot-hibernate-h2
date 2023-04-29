@@ -17,9 +17,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories("com.simplespringboot.app.repository")
 @EntityScan("com.simplespringboot.app.entity")
 @SpringBootApplication
-
-@OpenAPIDefinition(info =@Info(title = "Simple Springboot API", version = "1.0.0", contact = @Contact(name = "Elyas Erfani", email = "elyaserfani2@gmail.com"),  description = "Simple Springboot APIs"))
-@SecurityScheme(name = "Bearer Authentication", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer")
 public class SimpleSpringBootHibernateApplication implements ApplicationRunner {
 
     private static final Logger logger = LogManager.getLogger(SimpleSpringBootHibernateApplication.class);

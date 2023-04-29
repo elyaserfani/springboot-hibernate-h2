@@ -8,6 +8,8 @@ import com.simplespringboot.app.global.CustomPageDto;
 import com.simplespringboot.app.service.BookService;
 import com.simplespringboot.app.service.UserService;
 import com.simplespringboot.app.utility.JwtUtils;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -40,7 +42,7 @@ public class BookController {
     @PostMapping()
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @SecurityRequirement(name = "Bearer Authentication")
-    @Operation(summary = "Create book")
+    @ApiOperation(value = "Create book",  authorizations = {@Authorization(value="jwtToken") })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Book created", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = BookResponseDto.class)) }),
             @ApiResponse(responseCode = "404", description = "Author not found", content = {@Content(mediaType = "application/json")}),
@@ -52,7 +54,7 @@ public class BookController {
     @GetMapping()
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @SecurityRequirement(name = "Bearer Authentication")
-    @Operation(summary = "Get all books with pagination")
+    @ApiOperation(value = "Get all books with pagination", authorizations = {@Authorization(value="jwtToken") })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Book lists", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = CustomPageDto.class))}),
     })
@@ -63,7 +65,7 @@ public class BookController {
     @PatchMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @SecurityRequirement(name = "Bearer Authentication")
-    @Operation(summary = "Update single book")
+    @ApiOperation(value = "Update single book",authorizations = {@Authorization(value="jwtToken") })
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Updated book", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Book.class))}),
             @ApiResponse(responseCode = "404", description = "Author not found", content = {@Content(mediaType = "application/json")}),
